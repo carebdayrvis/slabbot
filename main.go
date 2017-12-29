@@ -14,9 +14,11 @@ import (
 	"syscall"
 )
 
+var imgPath string
+
 func main() {
 	token := flag.String("token", "", "token to use to connect to discord")
-	imgPath := flag.String("img", "", "path to image to use")
+	flag.StringVar(&imgPath, "img", "", "path to image to use")
 
 	flag.Parse()
 
@@ -24,7 +26,7 @@ func main() {
 		log.Fatal("Please provide a token")
 	}
 
-	if *imgPath == "" {
+	if imgPath == "" {
 		log.Fatal("Please provide a path to the image to use")
 	}
 
@@ -85,7 +87,7 @@ func createMeme(bottomText string) (*discordgo.File, error) {
 	f := &discordgo.File{}
 
 	// Read image
-	image, err := os.Open("./brick.jpg")
+	image, err := os.Open(imgPath)
 	if err != nil {
 		return f, err
 	}
