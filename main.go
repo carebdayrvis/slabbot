@@ -92,6 +92,8 @@ func createMeme(bottomText string) (*discordgo.File, error) {
 		return f, err
 	}
 
+	defer image.Close()
+
 	j, err := jpeg.Decode(image)
 	if err != nil {
 		return f, err
